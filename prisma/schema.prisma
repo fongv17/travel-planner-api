@@ -13,3 +13,49 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User{
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String 
+  role Role @default(USER)
+  @@map("users")
+}
+
+model Trip {
+  id Int @id @default(autoincrement())
+  name String
+  startDate DateTime
+  endDate DateTime
+  @@map("trip")
+}
+
+model Destination{
+  id Int @id @default(autoincrement())
+  city String
+  country String
+  arrivalDate DateTime
+  departureDate DateTime
+  @@map("destination")
+}
+
+model Activity {
+  id Int @id @default(autoincrement())
+  title String
+  type String
+  startTime DateTime
+  endTime DateTime
+}
+
+model Accommodation{
+  id Int @id @default(autoincrement())
+  destinationId Int
+  name String
+  type String
+  pricePerNight Decimal
+}
+
+enum Role  {
+  USER
+  ADMIN
+}
