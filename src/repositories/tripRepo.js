@@ -1,7 +1,7 @@
 import prisma from '../config/db.js';
 
 export async function findAllTrips() {
-    return prisma.trip.findMany();
+    return await prisma.trip.findMany();
 }
 
 export async function getById(id) {

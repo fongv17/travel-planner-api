@@ -10,7 +10,8 @@ app.use(cors());
 app.use(morgan('tiny'));
 
 app.use(express.json());
-app.use('/trips', tripRoutes);
+app.use('/trip', tripRoutes);
+app.use('/destination', destinationRoutes);
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
