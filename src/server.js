@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import tripRoutes from './routes/tripRoutes.js';
+import destinationRoutes from './routes/destinationRoutes.js';
+import activityRoutes from './routes/activityRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +14,7 @@ app.use(morgan('tiny'));
 app.use(express.json());
 app.use('/trip', tripRoutes);
 app.use('/destination', destinationRoutes);
+app.use('/activity', activityRoutes);
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;

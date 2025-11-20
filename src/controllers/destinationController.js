@@ -23,12 +23,10 @@ export async function createDestinationHandler(req, res) {
 }
 
 export async function updateDestinationHandler(req, res, next) {
-    let id = parseInt(req.params.id);
+    let id = parseInt(req.params.tripId);
     const updates = {};
     if (req.body.country) updates.country = req.body.country;
     if (req.body.city) updates.city = req.body.city;
-    if (req.body.arrivalDate) updates.arrivalDate = req.body.arrivalDate;
-    if (req.body.departureDate) updates.departureDate = req.body.departureDate;
     updatedDestination = await updateDestination(id, updates);
     res.status(200).json(updatedDestination)
 }

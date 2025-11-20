@@ -13,9 +13,9 @@ export async function getById(id) {
     where: { id },
     select: {
       id: true,
+      tripId: true,
       country: true,
-      arrivalDate: true,
-      departureDate: true,
+      city: true,
     },
   });
   return destination;
