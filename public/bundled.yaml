@@ -1,0 +1,507 @@
+openapi: 3.0.3
+info:
+  title: Travel Planner API
+  version: 1.0.0
+  description: API for managing trips, accommodations, activities, destinations, and users.
+servers:
+  - url: http://localhost:3000
+paths:
+  /accommodations:
+    get:
+      summary: Get all accommodations
+      responses:
+        '200':
+          description: List of accommodations
+          content:
+            application/json:
+              example:
+                - id: 1
+                  name: Seaside Hotel
+                  type: Hotel
+                  pricePerNight: 120.5
+    post:
+      summary: Create accommodation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccommodationCreate'
+            example:
+              name: Mountain Resort
+              type: Resort
+              pricePerNight: 150
+      responses:
+        '201':
+          description: Created accommodation
+          content:
+            application/json:
+              example:
+                id: 2
+                name: Mountain Resort
+                type: Resort
+                pricePerNight: 150
+  /accommodations/{id}:
+    get:
+      summary: Get accommodation by ID
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: Accommodation found
+          content:
+            application/json:
+              example:
+                id: 1
+                name: Seaside Hotel
+                type: Hotel
+                pricePerNight: 120.5
+    put:
+      summary: Update accommodation
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccommodationUpdate'
+            example:
+              pricePerNight: 140
+      responses:
+        '200':
+          description: Updated accommodation
+          content:
+            application/json:
+              example:
+                id: 1
+                name: Seaside Hotel
+                type: Hotel
+                pricePerNight: 140
+    delete:
+      summary: Delete accommodation
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: Deleted successfully
+  /activities:
+    get:
+      summary: Get all activities
+      responses:
+        '200':
+          description: List of activities
+          content:
+            application/json:
+              example:
+                - id: 1
+                  country: Italy
+                  city: Rome
+                  arrivalDate: '2025-12-01'
+                  departureDate: '2025-12-07'
+    post:
+      summary: Create activity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivityCreate'
+            example:
+              country: Italy
+              city: Rome
+              arrivalDate: '2025-12-01'
+              departureDate: '2025-12-07'
+      responses:
+        '201':
+          description: Created activity
+          content:
+            application/json:
+              example:
+                id: 2
+                country: France
+                city: Paris
+                arrivalDate: '2025-12-10'
+                departureDate: '2025-12-15'
+  /activities/{id}:
+    get:
+      summary: Get activity by ID
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: Activity found
+          content:
+            application/json:
+              example:
+                id: 1
+                country: Italy
+                city: Rome
+                arrivalDate: '2025-12-01'
+                departureDate: '2025-12-07'
+    put:
+      summary: Update activity
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivityUpdate'
+            example:
+              city: Venice
+      responses:
+        '200':
+          description: Updated activity
+          content:
+            application/json:
+              example:
+                id: 1
+                country: Italy
+                city: Venice
+                arrivalDate: '2025-12-01'
+                departureDate: '2025-12-07'
+    delete:
+      summary: Delete activity
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: Deleted successfully
+  /destinations:
+    get:
+      summary: Get all destinations
+      responses:
+        '200':
+          description: List of destinations
+          content:
+            application/json:
+              example:
+                - id: 1
+                  country: France
+                  city: Paris
+    post:
+      summary: Create destination
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationCreate'
+            example:
+              country: Germany
+              city: Berlin
+      responses:
+        '201':
+          description: Created destination
+          content:
+            application/json:
+              example:
+                id: 2
+                country: Germany
+                city: Berlin
+  /destinations/{id}:
+    get:
+      summary: Get destination by ID
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: Destination found
+          content:
+            application/json:
+              example:
+                id: 1
+                country: France
+                city: Paris
+    put:
+      summary: Update destination
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DestinationUpdate'
+            example:
+              city: Lyon
+      responses:
+        '200':
+          description: Updated destination
+          content:
+            application/json:
+              example:
+                id: 1
+                country: France
+                city: Lyon
+    delete:
+      summary: Delete destination
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: Deleted successfully
+  /trips:
+    get:
+      summary: Get all trips
+      responses:
+        '200':
+          description: List of trips
+          content:
+            application/json:
+              example:
+                - id: 1
+                  name: Summer Europe Trip
+                  startDate: '2025-06-01'
+                  endDate: '2025-06-15'
+    post:
+      summary: Create trip
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripCreate'
+            example:
+              name: Winter Asia Trip
+              startDate: '2025-12-01'
+              endDate: '2025-12-20'
+      responses:
+        '201':
+          description: Created trip
+          content:
+            application/json:
+              example:
+                id: 2
+                name: Winter Asia Trip
+                startDate: '2025-12-01'
+                endDate: '2025-12-20'
+  /trips/{id}:
+    get:
+      summary: Get trip by ID
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: Trip found
+          content:
+            application/json:
+              example:
+                id: 1
+                name: Summer Europe Trip
+                startDate: '2025-06-01'
+                endDate: '2025-06-15'
+    put:
+      summary: Update trip
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripUpdate'
+            example:
+              name: Summer Europe Adventure
+      responses:
+        '200':
+          description: Updated trip
+          content:
+            application/json:
+              example:
+                id: 1
+                name: Summer Europe Adventure
+                startDate: '2025-06-01'
+                endDate: '2025-06-15'
+    delete:
+      summary: Delete trip
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '204':
+          description: Deleted successfully
+  /users:
+    get:
+      summary: Get all users
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              example:
+                - id: 1
+                  email: jake@example.com
+                  role: user
+    post:
+      summary: Create user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+            example:
+              email: alice@example.com
+              role: user
+      responses:
+        '201':
+          description: Created user
+          content:
+            application/json:
+              example:
+                id: 2
+                email: alice@example.com
+                role: user
+  /users/{id}:
+    get:
+      summary: Get user by ID
+      parameters:
+        - $ref: '#/components/parameters/IdParam'
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              example:
+                id: 1
+                email: jake@example.com
+                role: user
+components:
+  schemas:
+    AccommodationCreate:
+      type: object
+      required:
+        - name
+        - type
+        - pricePerNight
+      properties:
+        name:
+          type: string
+          example: Seaside Hotel
+        type:
+          type: string
+          example: Hotel
+        pricePerNight:
+          type: number
+          example: 120.5
+    AccommodationUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Mountain Resort
+        type:
+          type: string
+          example: Resort
+        pricePerNight:
+          type: number
+          example: 150
+    ActivityCreate:
+      type: object
+      required:
+        - country
+        - city
+        - arrivalDate
+        - departureDate
+      properties:
+        country:
+          type: string
+          example: Italy
+        city:
+          type: string
+          example: Rome
+        arrivalDate:
+          type: string
+          format: date
+          example: '2025-12-01'
+        departureDate:
+          type: string
+          format: date
+          example: '2025-12-07'
+    ActivityUpdate:
+      type: object
+      properties:
+        country:
+          type: string
+          example: Italy
+        city:
+          type: string
+          example: Venice
+        arrivalDate:
+          type: string
+          format: date
+          example: '2025-12-01'
+        departureDate:
+          type: string
+          format: date
+          example: '2025-12-07'
+    DestinationCreate:
+      type: object
+      required:
+        - country
+        - city
+      properties:
+        country:
+          type: string
+          example: Germany
+        city:
+          type: string
+          example: Berlin
+    DestinationUpdate:
+      type: object
+      properties:
+        country:
+          type: string
+          example: France
+        city:
+          type: string
+          example: Lyon
+    TripCreate:
+      type: object
+      required:
+        - name
+        - startDate
+        - endDate
+      properties:
+        name:
+          type: string
+          example: Winter Asia Trip
+        startDate:
+          type: string
+          format: date
+          example: '2025-12-01'
+        endDate:
+          type: string
+          format: date
+          example: '2025-12-20'
+    TripUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Summer Europe Adventure
+        startDate:
+          type: string
+          format: date
+          example: '2025-06-01'
+        endDate:
+          type: string
+          format: date
+          example: '2025-06-15'
+    UserCreate:
+      type: object
+      required:
+        - email
+        - role
+      properties:
+        email:
+          type: string
+          example: alice@example.com
+        role:
+          type: string
+          example: user
+  parameters:
+    IdParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
