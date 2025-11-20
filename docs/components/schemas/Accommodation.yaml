@@ -2,9 +2,13 @@ type: object
 properties:
   id:
     type: integer
+    example: 1
   name:
     type: string
+    example: Seaside Hotel
   type:
     type: string
+    example: Hotel
   pricePerNight:
     type: number
+    example: 120.5

@@ -5,6 +5,12 @@ get:
   responses:
     '200':
       description: Destination found
+      content:
+        application/json:
+          example:
+            id: 1
+            country: France
+            city: Paris
 put:
   summary: Update destination
   parameters:
@@ -14,13 +20,21 @@ put:
       application/json:
         schema:
           $ref: ../components/schemas/DestinationUpdate.yaml
+        example:
+          city: Lyon
   responses:
     '200':
-      description: Updated
+      description: Updated destination
+      content:
+        application/json:
+          example:
+            id: 1
+            country: France
+            city: Lyon
 delete:
   summary: Delete destination
   parameters:
     - $ref: ../components/parameters/IdParam.yaml
   responses:
     '204':
-      description: Deleted
+      description: Deleted successfully

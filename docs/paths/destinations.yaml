@@ -3,6 +3,12 @@ get:
   responses:
     '200':
       description: List of destinations
+      content:
+        application/json:
+          example:
+            - id: 1
+              country: France
+              city: Paris
 post:
   summary: Create destination
   requestBody:
@@ -11,6 +17,15 @@ post:
       application/json:
         schema:
           $ref: ../components/schemas/DestinationCreate.yaml
+        example:
+          country: Germany
+          city: Berlin
   responses:
     '201':
-      description: Created
+      description: Created destination
+      content:
+        application/json:
+          example:
+            id: 2
+            country: Germany
+            city: Berlin

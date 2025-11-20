@@ -1,42 +1,40 @@
 get:
-  summary: Get activity by ID
+  summary: Get trip by ID
   parameters:
     - $ref: ../components/parameters/IdParam.yaml
   responses:
     '200':
-      description: Activity found
+      description: Trip found
       content:
         application/json:
           example:
             id: 1
-            country: Italy
-            city: Rome
-            arrivalDate: '2025-12-01'
-            departureDate: '2025-12-07'
+            name: Summer Europe Trip
+            startDate: '2025-06-01'
+            endDate: '2025-06-15'
 put:
-  summary: Update activity
+  summary: Update trip
   parameters:
     - $ref: ../components/parameters/IdParam.yaml
   requestBody:
     content:
       application/json:
         schema:
-          $ref: ../components/schemas/ActivityUpdate.yaml
+          $ref: ../components/schemas/TripUpdate.yaml
         example:
-          city: Venice
+          name: Summer Europe Adventure
   responses:
     '200':
-      description: Updated activity
+      description: Updated trip
       content:
         application/json:
           example:
             id: 1
-            country: Italy
-            city: Venice
-            arrivalDate: '2025-12-01'
-            departureDate: '2025-12-07'
+            name: Summer Europe Adventure
+            startDate: '2025-06-01'
+            endDate: '2025-06-15'
 delete:
-  summary: Delete activity
+  summary: Delete trip
   parameters:
     - $ref: ../components/parameters/IdParam.yaml
   responses:

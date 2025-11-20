@@ -7,11 +7,15 @@ required:
 properties:
   country:
     type: string
+    example: Italy
   city:
     type: string
+    example: Rome
   arrivalDate:
     type: string
     format: date
+    example: '2025-12-01'
   departureDate:
     type: string
     format: date
+    example: '2025-12-07'

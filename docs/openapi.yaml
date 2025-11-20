@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
-  title: Travel API
+  title: Travel Planner API
   version: 1.0.0
-  description: Full OpenAPI definition for Accommodations, Activities, and Destinations
+  description: API for managing trips, accommodations, activities, destinations, and users.
 servers:
   - url: http://localhost:3000
 paths:
@@ -18,3 +18,11 @@ paths:
     $ref: paths/destinations.yaml
   /destinations/{id}:
     $ref: paths/destinations_{id}.yaml
+  /trips:
+    $ref: paths/trips.yaml
+  /trips/{id}:
+    $ref: paths/trips_{id}.yaml
+  /users:
+    $ref: paths/users.yaml
+  /users/{id}:
+    $ref: paths/users_{id}.yaml

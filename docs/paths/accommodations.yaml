@@ -3,14 +3,32 @@ get:
   responses:
     '200':
       description: List of accommodations
+      content:
+        application/json:
+          example:
+            - id: 1
+              name: Seaside Hotel
+              type: Hotel
+              pricePerNight: 120.5
 post:
-  summary: Create a new accommodation
+  summary: Create accommodation
   requestBody:
     required: true
     content:
       application/json:
         schema:
           $ref: ../components/schemas/AccommodationCreate.yaml
+        example:
+          name: Mountain Resort
+          type: Resort
+          pricePerNight: 150
   responses:
     '201':
-      description: Created
+      description: Created accommodation
+      content:
+        application/json:
+          example:
+            id: 2
+            name: Mountain Resort
+            type: Resort
+            pricePerNight: 150

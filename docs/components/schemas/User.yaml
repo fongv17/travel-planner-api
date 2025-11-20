@@ -3,9 +3,9 @@ properties:
   id:
     type: integer
     example: 1
-  country:
+  email:
     type: string
-    example: France
-  city:
+    example: jake@example.com
+  role:
     type: string
-    example: Paris
+    example: user

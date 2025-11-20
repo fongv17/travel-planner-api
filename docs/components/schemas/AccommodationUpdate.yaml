@@ -2,7 +2,10 @@ type: object
 properties:
   name:
     type: string
+    example: Mountain Resort
   type:
     type: string
+    example: Resort
   pricePerNight:
     type: number
+    example: 150
