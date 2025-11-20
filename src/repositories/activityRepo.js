@@ -13,12 +13,14 @@ export async function getById(id) {
     where: { id },
     select: {
       id: true,
+      tripId: true,
       country: true,
+      city: true,
       arrivalDate: true,
       departureDate: true,
     },
   });
-  return destination;
+  return activity;
 }
 
 export async function changeActivity(id, updates) {

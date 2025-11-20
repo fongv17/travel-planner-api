@@ -23,7 +23,7 @@ export async function createDestinationHandler(req, res) {
 }
 
 export async function updateDestinationHandler(req, res, next) {
-    let id = parseInt(req.params.tripId);
+    let id = parseInt(req.params.id);
     const updates = {};
     if (req.body.country) updates.country = req.body.country;
     if (req.body.city) updates.city = req.body.city;
