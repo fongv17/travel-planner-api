@@ -1,0 +1,16 @@
+get:
+  summary: Get all activities
+  responses:
+    '200':
+      description: List of activities
+post:
+  summary: Create activity
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/ActivityCreate.yaml
+  responses:
+    '201':
+      description: Created

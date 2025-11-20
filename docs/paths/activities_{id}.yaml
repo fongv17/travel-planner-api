@@ -1,0 +1,26 @@
+get:
+  summary: Get activity by ID
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  responses:
+    '200':
+      description: Activity found
+put:
+  summary: Update activity
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/ActivityUpdate.yaml
+  responses:
+    '200':
+      description: Updated
+delete:
+  summary: Delete activity
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  responses:
+    '204':
+      description: Deleted

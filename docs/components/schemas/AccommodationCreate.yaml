@@ -1,0 +1,12 @@
+type: object
+required:
+  - name
+  - type
+  - pricePerNight
+properties:
+  name:
+    type: string
+  type:
+    type: string
+  pricePerNight:
+    type: number

@@ -1,0 +1,16 @@
+get:
+  summary: Get all accommodations
+  responses:
+    '200':
+      description: List of accommodations
+post:
+  summary: Create a new accommodation
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/AccommodationCreate.yaml
+  responses:
+    '201':
+      description: Created

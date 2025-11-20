@@ -1,0 +1,16 @@
+get:
+  summary: Get all destinations
+  responses:
+    '200':
+      description: List of destinations
+post:
+  summary: Create destination
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/DestinationCreate.yaml
+  responses:
+    '201':
+      description: Created

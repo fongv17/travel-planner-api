@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: integer
+  country:
+    type: string
+  city:
+    type: string
+  arrivalDate:
+    type: string
+    format: date
+  departureDate:
+    type: string
+    format: date

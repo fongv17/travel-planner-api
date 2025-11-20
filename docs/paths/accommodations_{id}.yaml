@@ -1,0 +1,26 @@
+get:
+  summary: Get accommodation by ID
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  responses:
+    '200':
+      description: Accommodation found
+put:
+  summary: Update accommodation
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/AccommodationUpdate.yaml
+  responses:
+    '200':
+      description: Updated
+delete:
+  summary: Delete accommodation
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  responses:
+    '204':
+      description: Deleted

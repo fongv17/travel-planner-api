@@ -1,0 +1,26 @@
+get:
+  summary: Get destination by ID
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  responses:
+    '200':
+      description: Destination found
+put:
+  summary: Update destination
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/DestinationUpdate.yaml
+  responses:
+    '200':
+      description: Updated
+delete:
+  summary: Delete destination
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  responses:
+    '204':
+      description: Deleted

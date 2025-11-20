@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  title: Travel API
+  version: 1.0.0
+  description: Full OpenAPI definition for Accommodations, Activities, and Destinations
+servers:
+  - url: http://localhost:3000
+paths:
+  /accommodations:
+    $ref: paths/accommodations.yaml
+  /accommodations/{id}:
+    $ref: paths/accommodations_{id}.yaml
+  /activities:
+    $ref: paths/activities.yaml
+  /activities/{id}:
+    $ref: paths/activities_{id}.yaml
+  /destinations:
+    $ref: paths/destinations.yaml
+  /destinations/{id}:
+    $ref: paths/destinations_{id}.yaml

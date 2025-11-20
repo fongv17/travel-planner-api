@@ -1,0 +1,9 @@
+type: object
+required:
+  - country
+  - city
+properties:
+  country:
+    type: string
+  city:
+    type: string
