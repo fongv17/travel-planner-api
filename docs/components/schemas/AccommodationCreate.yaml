@@ -1,0 +1,15 @@
+type: object
+required:
+  - name
+  - type
+  - pricePerNight
+properties:
+  name:
+    type: string
+    example: Seaside Hotel
+  type:
+    type: string
+    example: Hotel
+  pricePerNight:
+    type: number
+    example: 120.5

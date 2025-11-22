@@ -1,0 +1,31 @@
+get:
+  summary: Get all destinations
+  responses:
+    '200':
+      description: List of destinations
+      content:
+        application/json:
+          example:
+            - id: 1
+              country: France
+              city: Paris
+post:
+  summary: Create destination
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/DestinationCreate.yaml
+        example:
+          country: Germany
+          city: Berlin
+  responses:
+    '201':
+      description: Created destination
+      content:
+        application/json:
+          example:
+            id: 2
+            country: Germany
+            city: Berlin

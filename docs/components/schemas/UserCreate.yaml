@@ -1,0 +1,11 @@
+type: object
+required:
+  - email
+  - role
+properties:
+  email:
+    type: string
+    example: alice@example.com
+  role:
+    type: string
+    example: user

@@ -1,0 +1,31 @@
+get:
+  summary: Get all users
+  responses:
+    '200':
+      description: List of users
+      content:
+        application/json:
+          example:
+            - id: 1
+              email: jake@example.com
+              role: user
+post:
+  summary: Create user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/UserCreate.yaml
+        example:
+          email: alice@example.com
+          role: user
+  responses:
+    '201':
+      description: Created user
+      content:
+        application/json:
+          example:
+            id: 2
+            email: alice@example.com
+            role: user

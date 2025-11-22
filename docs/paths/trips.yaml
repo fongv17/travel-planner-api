@@ -1,0 +1,34 @@
+get:
+  summary: Get all trips
+  responses:
+    '200':
+      description: List of trips
+      content:
+        application/json:
+          example:
+            - id: 1
+              name: Summer Europe Trip
+              startDate: '2025-06-01'
+              endDate: '2025-06-15'
+post:
+  summary: Create trip
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/TripCreate.yaml
+        example:
+          name: Winter Asia Trip
+          startDate: '2025-12-01'
+          endDate: '2025-12-20'
+  responses:
+    '201':
+      description: Created trip
+      content:
+        application/json:
+          example:
+            id: 2
+            name: Winter Asia Trip
+            startDate: '2025-12-01'
+            endDate: '2025-12-20'

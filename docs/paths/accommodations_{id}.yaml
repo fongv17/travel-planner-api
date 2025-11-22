@@ -1,0 +1,42 @@
+get:
+  summary: Get accommodation by ID
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  responses:
+    '200':
+      description: Accommodation found
+      content:
+        application/json:
+          example:
+            id: 1
+            name: Seaside Hotel
+            type: Hotel
+            pricePerNight: 120.5
+put:
+  summary: Update accommodation
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/AccommodationUpdate.yaml
+        example:
+          pricePerNight: 140
+  responses:
+    '200':
+      description: Updated accommodation
+      content:
+        application/json:
+          example:
+            id: 1
+            name: Seaside Hotel
+            type: Hotel
+            pricePerNight: 140
+delete:
+  summary: Delete accommodation
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  responses:
+    '204':
+      description: Deleted successfully

@@ -1,0 +1,8 @@
+type: object
+properties:
+  country:
+    type: string
+    example: France
+  city:
+    type: string
+    example: Lyon

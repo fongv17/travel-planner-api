@@ -1,0 +1,11 @@
+type: object
+required:
+  - country
+  - city
+properties:
+  country:
+    type: string
+    example: Germany
+  city:
+    type: string
+    example: Berlin

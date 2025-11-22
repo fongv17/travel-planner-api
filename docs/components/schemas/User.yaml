@@ -1,0 +1,11 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  email:
+    type: string
+    example: jake@example.com
+  role:
+    type: string
+    example: user

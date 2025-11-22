@@ -1,0 +1,13 @@
+get:
+  summary: Get user by ID
+  parameters:
+    - $ref: ../components/parameters/IdParam.yaml
+  responses:
+    '200':
+      description: User found
+      content:
+        application/json:
+          example:
+            id: 1
+            email: jake@example.com
+            role: user

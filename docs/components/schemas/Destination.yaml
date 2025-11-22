@@ -1,0 +1,11 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  country:
+    type: string
+    example: France
+  city:
+    type: string
+    example: Paris

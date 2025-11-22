@@ -1,0 +1,17 @@
+type: object
+required:
+  - name
+  - startDate
+  - endDate
+properties:
+  name:
+    type: string
+    example: Winter Asia Trip
+  startDate:
+    type: string
+    format: date
+    example: '2025-12-01'
+  endDate:
+    type: string
+    format: date
+    example: '2025-12-20'
