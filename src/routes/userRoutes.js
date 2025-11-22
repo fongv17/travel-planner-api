@@ -1,10 +1,7 @@
 import express from 'express';
 import { getLoggedInUserHandler, getAllUsersHandler, updateLoggedInUserHandler, deleteUserHandler, getAllUserTripsHandler, adminUpdateUserRoleHandler  } from '../controllers/userController.js';
 import {
-    validateUserId, 
-    validateUserQuery, 
-    validateUpdateUser, 
-    validateUpdateUserRole 
+    validateUser, 
 } from '../middleware/userValidators.js';
 
 const router = express.Router();
