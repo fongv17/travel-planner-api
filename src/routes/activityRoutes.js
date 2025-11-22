@@ -7,13 +7,18 @@ import {
     deleteActivityHandler,
 } from '../controllers/activityController.js';
 
-
+import { 
+    validateActivityId, 
+    validateActivityQuery,
+    validateCreateActivity, 
+    validateUpdateActivity 
+} from '../middleware/activityValidators.js';
 const router = express.Router();
 
-router.get('/', getAllActivitiesHandler);
-router.get('/:id', getActivityByIdHandler);
-router.post('/', createActivityHandler);
-router.put('/:id', updateActivityHandler);
-router.delete('/:id', deleteActivityHandler);
+router.get('/', validateActivityQuery, getAllActivitiesHandler);
+router.get('/:id', validateActivityId, getActivityByIdHandler);
+router.post('/', validateCreateActivity, createActivityHandler);
+router.put('/:id', validateActivityId, validateUpdateActivity, updateActivityHandler);
+router.delete('/:id', validateActivityId, deleteActivityHandler);
 
 export default router;

@@ -7,13 +7,19 @@ import {
     deleteAccommodationHandler,
 } from '../controllers/accommodationController.js';
 
+import { 
+    validateAccommodationId, 
+    validateAccommodationQuery, 
+    validateCreateAccommodation, 
+    validateUpdateAccommodation 
+} from '../middleware/accommodationValidators.js';
 
 const router = express.Router();
 
-router.get('/', getAllAccommodationsHandler);
-router.get('/:id', getAccommodationByIdHandler);
-router.post('/', createAccommodationHandler);
-router.put('/:id', updateAccommodationHandler);
-router.delete('/:id', deleteAccommodationHandler);
+router.get('/', validateAccommodationQuery, getAllAccommodationsHandler);
+router.get('/:id', validateAccommodationId, getAccommodationByIdHandler);
+router.post('/', validateCreateAccommodation, createAccommodationHandler);
+router.put('/:id', validateAccommodationId, validateUpdateAccommodation, updateAccommodationHandler);
+router.delete('/:id', validateAccommodationId, deleteAccommodationHandler);
 
 export default router;
