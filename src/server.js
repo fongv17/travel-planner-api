@@ -8,6 +8,8 @@ import destinationRoutes from './routes/destinationRoutes.js';
 import activityRoutes from './routes/activityRoutes.js';
 import accommodationRoutes from './routes/accommodationRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,6 +25,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use(express.json());
+app.use('/auth', authRoutes);
 app.use('/trip', tripRoutes);
 app.use('/destination', destinationRoutes);
 app.use('/activity', activityRoutes);
