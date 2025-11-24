@@ -8,7 +8,7 @@
 ALTER TABLE "trip" DROP CONSTRAINT "trip_userId_fkey";
 
 -- AlterTable
-ALTER TABLE "users" ADD COLUMN     "name" TEXT NOT NULL;
+ALTER TABLE "users" ADD COLUMN     "name" TEXT DEFAULT '' NOT NULL;
 
 -- AddForeignKey
 ALTER TABLE "trip" ADD CONSTRAINT "trip_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
