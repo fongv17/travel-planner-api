@@ -17,7 +17,7 @@ try {
   );
 
  for (const user of users) {
-    await prisma.post.createMany({
+    await prisma.trip.createMany({
       data: [
         {
          name: "Tokyo Trip",
