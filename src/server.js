@@ -17,7 +17,9 @@ app.use(morgan('tiny'));
 
 const specs = YAML.load('./public/bundled.yaml')
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
-
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'api running' });
+});
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
