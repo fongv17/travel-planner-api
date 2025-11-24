@@ -1,37 +1,37 @@
-import bcrypt from 'bcrypt';
-import prisma from '../src/config/db.js';
+import { PrismaClient } from '@prisma/client';
 
-try {
-  await prisma.user.deleteMany();
+const prisma = new PrismaClient();
 
-  const usersData = [
-    
-    {
-      email: 'Trevor@demo.com',
-      password: await bcrypt.hash('Trevor456', 10),
-    },
-  ];
+async function main() {
+  // Create an example user
+  const user = await prisma.user.create({
+    data: {
+      name: "Trevor Demo",
+      email: "Trevor@demo.com",
+      password: "$2b$10$Nd.XzJ1L20del1Ph2iTtWOi3xd/JGZkq1Tu2/7wGWfUhK.LsIXZ6.", // hashed
+      
+    }
+  });
 
-  const users = await Promise.all(
-    usersData.map((user) => prisma.user.create({ data: user })),
-  );
+  console.log("Seeded user:", user);
 
- for (const user of users) {
-    await prisma.trip.createMany({
-      data: [
-        {
-         name: "Tokyo Trip",
-         startDate: "06-07-2026",
-          endDate: "06-10-2026",
-          userId: user.id,
-        },
-      ],
-    });
-  }
-  
-  console.log('Seed completed successfully!');
-} catch (error) {
-  console.error('Seed failed:', error);
-} finally {
-  await prisma.$disconnect();
+  /*
+  const trip = await prisma.trip.create({
+    data: {
+      name: "Sample Trip",
+      startDate: "2025-01-01",
+      endDate: "2025-01-10",
+      userId: user.id
+    }
+  });
+  */
 }
+
+main()
+  .catch((e) => {
+    console.error("Seed error:", e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

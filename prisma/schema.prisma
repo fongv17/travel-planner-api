@@ -29,7 +29,7 @@ model Trip {
   name         String
   startDate    String
   endDate      String
-  traveller    User          @relation(fields: [userId], references: [id])
+  traveller    User          @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId       Int
   destinations Destination[]
 
