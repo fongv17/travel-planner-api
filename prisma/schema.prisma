@@ -13,58 +13,62 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id Int @id @default(autoincrement())
-  email String @unique
-  password String 
-  role Role @default(USER)
-  trips Trip[]
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     Role   @default(USER)
+  trips    Trip[]
+
   @@map("users")
 }
 
 model Trip {
-  id Int @id @default(autoincrement())
-  name String
-  startDate String
-  endDate String
-  traveller User @relation(fields: [userId], references: [id])
-  userId Int
+  id           Int           @id @default(autoincrement())
+  name         String
+  startDate    String
+  endDate      String
+  traveller    User          @relation(fields: [userId], references: [id])
+  userId       Int
   destinations Destination[]
+
   @@map("trip")
 }
 
-model Destination{
-  id Int @id @default(autoincrement())
-  city String
-  country String
-  arrivalDate String
+model Destination {
+  id            Int            @id @default(autoincrement())
+  city          String
+  country       String
+  arrivalDate   String
   departureDate String
-  trip Trip @relation(fields: [tripId], references: [id])
-  tripId Int
-  activity Activity[]
+  trip          Trip           @relation(fields: [tripId], references: [id])
+  tripId        Int
+  activity      Activity[]
   accommodation Accommodation[]
+
   @@map("destination")
 }
 
 model Activity {
-  id Int @id @default(autoincrement())
-  destination Destination @relation(fields: [destinationId], references: [id])
+  id            Int         @id @default(autoincrement())
+  destination   Destination @relation(fields: [destinationId], references: [id])
   destinationId Int
-  title String
-  startTime String
-  endTime String
+  title         String
+  startTime     String
+  endTime       String
 }
 
-model Accommodation{
-  id Int @id @default(autoincrement())
-  destination Destination @relation(fields: [destinationId], references: [id])
+model Accommodation {
+  id            Int         @id @default(autoincrement())
+  destination   Destination @relation(fields: [destinationId], references: [id])
   destinationId Int
-  name String
-  type String
+  name          String
+  type          String
   pricePerNight Decimal
 }
 
-enum Role  {
+enum Role {
   USER
   ADMIN
 }
