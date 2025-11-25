@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:3000
     description: Local development servers
-  - url: https://task-api-1-0j99.onrender.com/
+  - url: https://travel-planner-api-1-476c.onrender.com/
     description: Production sever on render
 paths:
   /accommodations:
