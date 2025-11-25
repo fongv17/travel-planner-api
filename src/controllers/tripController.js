@@ -17,9 +17,18 @@ export async function getTripByIdHandler(req, res) {
   res.status(200).json(trip);
 }
 
-export async function createTripHandler(req, res) {
-    const newTrip = await createTrip(req.body); 
+export async function createTripHandler(req, res, next) {
+  try {
+    const data = {
+      ...req.body,
+      startDate: new Date(req.body.startDate).toISOString(),
+      endDate: new Date(req.body.endDate).toISOString(),
+    };
+    const newTrip = await createTrip(data);
     res.status(201).json(newTrip);
+  } catch (err) {
+    next(err);
+  }
 }
 
 export async function updateTripHandler(req, res, next) {
