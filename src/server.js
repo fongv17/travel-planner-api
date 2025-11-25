@@ -28,11 +28,11 @@ app.get('/health', (req, res) => {
 
 app.use(express.json());
 app.use('/auth', authRoutes);
-app.use('/trip', tripRoutes);
-app.use('/destination', destinationRoutes);
-app.use('/activity', activityRoutes);
-app.use('/accommodation', accommodationRoutes);
-app.use('/user', userRoutes);
+app.use('/trips', tripRoutes);
+app.use('/destinations', destinationRoutes);
+app.use('/activities', activityRoutes);
+app.use('/accommodations', accommodationRoutes);
+app.use('/users', userRoutes);
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
