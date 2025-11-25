@@ -17,7 +17,6 @@
     "eslint-config-prettier": "^10.1.5",
     "globals": "^16.2.0",
     "prettier": "^3.6.1",
-    "prisma": "^5.19.1",
     "supertest": "^7.1.4"
   },
   "dependencies": {
@@ -28,6 +27,7 @@
     "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "prisma": "^5.19.1",
     "swagger-cli": "^4.0.4",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
