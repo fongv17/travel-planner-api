@@ -5,6 +5,9 @@ info:
   description: API for managing trips, accommodations, activities, destinations, and users.
 servers:
   - url: http://localhost:3000
+    description: Local development servers
+  - url: https://task-api-1-0j99.onrender.com/
+    description: Production sever on render
 paths:
   /accommodations:
     get:
