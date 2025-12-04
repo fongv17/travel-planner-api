@@ -42,7 +42,7 @@ model Destination {
   country       String
   arrivalDate   String
   departureDate String
-  trip          Trip           @relation(fields: [tripId], references: [id])
+  trip          Trip           @relation(fields: [tripId], references: [id], onDelete: Cascade)
   tripId        Int
   activity      Activity[]
   accommodation Accommodation[]
@@ -52,7 +52,7 @@ model Destination {
 
 model Activity {
   id            Int         @id @default(autoincrement())
-  destination   Destination @relation(fields: [destinationId], references: [id])
+  destination   Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
   destinationId Int
   title         String
   startTime     String
@@ -61,7 +61,7 @@ model Activity {
 
 model Accommodation {
   id            Int         @id @default(autoincrement())
-  destination   Destination @relation(fields: [destinationId], references: [id])
+  destination   Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
   destinationId Int
   name          String
   type          String

@@ -100,57 +100,60 @@ async function main() {
 
   console.log("Seeded destinations:", paris, rome);
 
-  // Add activities (using individual upserts for safety)
+  // Add activities (using unique constraints for safety)
   const activities = [
     {
-      id: 1,
       title: "Eiffel Tower Tour",
-      startTime: "2025-06-02T10:00",
-      endTime: "2025-06-02T12:00",
+      startTime: "10:00",
+      endTime: "12:00",
       destinationId: paris.id,
     },
     {
-      id: 2,
       title: "Louvre Museum Visit",
-      startTime: "2025-06-03T14:00",
-      endTime: "2025-06-03T17:00",
+      startTime: "14:00",
+      endTime: "17:00",
       destinationId: paris.id,
     },
     {
-      id: 3,
       title: "Colosseum Tour",
-      startTime: "2025-06-07T09:00",
-      endTime: "2025-06-07T11:00",
+      startTime: "09:00",
+      endTime: "11:00",
       destinationId: rome.id,
     },
     {
-      id: 4,
       title: "Vatican Museums",
-      startTime: "2025-06-08T10:00",
-      endTime: "2025-06-08T13:00",
+      startTime: "10:00",
+      endTime: "13:00",
       destinationId: rome.id,
     },
   ];
 
   for (const activity of activities) {
-    await prisma.activity.upsert({
-      where: { id: activity.id },
-      update: activity,
-      create: activity,
-    });
+    // For simplicity, just create without upsert to avoid ID conflicts
+    // In a production scenario, you'd want unique constraints
+    try {
+      await prisma.activity.create({
+        data: activity,
+      });
+    } catch (error) {
+      // Ignore if activity already exists (due to duplicate seeding)
+      if (!error.code === 'P2002') {
+        console.log(`Activity "${activity.title}" already exists, skipping...`);
+      } else {
+        throw error;
+      }
+    }
   }
 
-  // Add accommodations (using individual upserts for safety)
+  // Add accommodations
   const accommodations = [
     {
-      id: 1,
       name: "Hotel Parisian",
       type: "Hotel",
       pricePerNight: 150.5,
       destinationId: paris.id,
     },
     {
-      id: 2,
       name: "Rome Inn",
       type: "Hostel",
       pricePerNight: 80.0,
@@ -159,11 +162,18 @@ async function main() {
   ];
 
   for (const accommodation of accommodations) {
-    await prisma.accommodation.upsert({
-      where: { id: accommodation.id },
-      update: accommodation,
-      create: accommodation,
-    });
+    try {
+      await prisma.accommodation.create({
+        data: accommodation,
+      });
+    } catch (error) {
+      // Ignore if accommodation already exists (due to duplicate seeding)
+      if (!error.code === 'P2002') {
+        console.log(`Accommodation "${accommodation.name}" already exists, skipping...`);
+      } else {
+        throw error;
+      }
+    }
   }
 
   console.log("Seeded activities and accommodations.");
