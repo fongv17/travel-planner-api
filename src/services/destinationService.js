@@ -6,8 +6,8 @@ import {
     removeDestination
  } from '../repositories/destinationRepo.js';
 
-export async function getAllDestinations() {
-    return await findAllDestinations();
+export async function getAllDestinations(userId) {
+    return await findAllDestinations(userId);
 }
 
 export async function getDestinationById(id) {

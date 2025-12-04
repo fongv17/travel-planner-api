@@ -1,7 +1,22 @@
 import prisma from '../config/db.js';
 
-export async function findAllActivities() {
-    return await prisma.activity.findMany();
+export async function findAllActivities(userId) {
+    return await prisma.activity.findMany({
+        where: {
+            destination: {
+                trip: {
+                    userId: userId
+                }
+            }
+        },
+        include: {
+            destination: {
+                include: {
+                    trip: true
+                }
+            }
+        }
+    });
 }
 
 export async function makeActivity(data) {
@@ -13,11 +28,10 @@ export async function getById(id) {
     where: { id },
     select: {
       id: true,
-      tripId: true,
-      country: true,
-      city: true,
-      arrivalDate: true,
-      departureDate: true,
+      destinationId: true,
+      title: true,
+      startTime: true,
+      endTime: true,
     },
   });
   return activity;

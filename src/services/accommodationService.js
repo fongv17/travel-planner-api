@@ -6,8 +6,8 @@ import {
     removeAccommodation
  } from '../repositories/accommodationRepo.js';
 
-export async function getAllAccommodations() {
-    return await findAllAccommodations();
+export async function getAllAccommodations(userId) {
+    return await findAllAccommodations(userId);
 }
 
 export async function getAccommodationById(id) {

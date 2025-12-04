@@ -6,8 +6,8 @@ import {
     removeActivity
  } from '../repositories/activityRepo.js';
 
-export async function getAllActivities() {
-    return await findAllActivities();
+export async function getAllActivities(userId) {
+    return await findAllActivities(userId);
 }
 
 export async function getActivityById(id) {

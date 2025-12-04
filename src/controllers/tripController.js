@@ -7,7 +7,7 @@ import {
 } from '../services/tripService.js';
 
 export async function getAllTripsHandler(req, res) {
-    const trips = await getAllTrips();
+    const trips = await getAllTrips(req.user.id);
     res.json(trips);
 }
 
@@ -21,6 +21,7 @@ export async function createTripHandler(req, res, next) {
   try {
     const data = {
       ...req.body,
+      userId: req.user.id,
       startDate: new Date(req.body.startDate).toISOString(),
       endDate: new Date(req.body.endDate).toISOString(),
     };

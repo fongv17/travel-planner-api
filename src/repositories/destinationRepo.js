@@ -1,7 +1,16 @@
 import prisma from '../config/db.js';
 
-export async function findAllDestinations() {
-    return await prisma.destination.findMany();
+export async function findAllDestinations(userId) {
+    return await prisma.destination.findMany({
+        where: {
+            trip: {
+                userId: userId
+            }
+        },
+        include: {
+            trip: true
+        }
+    });
 }
 
 export async function makeDestination(data) {

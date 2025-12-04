@@ -6,8 +6,8 @@ import {
     removeTrip,
  } from '../repositories/tripRepo.js';
 
-export async function getAllTrips() {
-    return await findAllTrips();
+export async function getAllTrips(userId) {
+    return await findAllTrips(userId);
 }
 
 export async function getTripById(id) {

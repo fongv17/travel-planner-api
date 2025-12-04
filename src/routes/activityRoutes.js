@@ -7,18 +7,21 @@ import {
     deleteActivityHandler,
 } from '../controllers/activityController.js';
 
-import { 
-    validateActivityId, 
+import {
+    validateActivityId,
     validateActivityQuery,
-    validateCreateActivity, 
-    validateUpdateActivity 
+    validateCreateActivity,
+    validateUpdateActivity
 } from '../middleware/activityValidators.js';
+import { protect } from '../middleware/authMiddleware.js';
+import { authorizeActivityOwnership } from '../middleware/authorizeOwnership.js';
+
 const router = express.Router();
 
-router.get('/', validateActivityQuery, getAllActivitiesHandler);
-router.get('/:id', validateActivityId, getActivityByIdHandler);
-router.post('/', validateCreateActivity, createActivityHandler);
-router.put('/:id', validateActivityId, validateUpdateActivity, updateActivityHandler);
-router.delete('/:id', validateActivityId, deleteActivityHandler);
+router.get('/', protect, validateActivityQuery, getAllActivitiesHandler);
+router.get('/:id', protect, validateActivityId, authorizeActivityOwnership, getActivityByIdHandler);
+router.post('/', protect, validateCreateActivity, createActivityHandler);
+router.put('/:id', protect, validateActivityId, authorizeActivityOwnership, validateUpdateActivity, updateActivityHandler);
+router.delete('/:id', protect, validateActivityId, authorizeActivityOwnership, deleteActivityHandler);
 
 export default router;
