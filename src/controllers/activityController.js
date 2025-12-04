@@ -19,24 +19,28 @@ export async function getActivityByIdHandler(req, res) {
   res.status(200).json(activity);
 }
 
-export async function createActivityHandler(req, res) {
-    // Validate that the destination belongs to the user
-    const destination = await getDestinationById(req.body.destinationId);
-    if (!destination) {
-        const error = new Error('Destination not found');
-        error.status = 404;
-        throw error;
-    }
+export async function createActivityHandler(req, res, next) {
+    try {
+        // Validate that the destination belongs to the user
+        const destination = await getDestinationById(req.body.destinationId);
+        if (!destination) {
+            const error = new Error('Destination not found');
+            error.status = 404;
+            throw error;
+        }
 
-    const trip = await getTripById(destination.tripId);
-    if (trip.userId !== req.user.id) {
-        const error = new Error('Forbidden: cannot create activity for destination you do not own');
-        error.status = 403;
-        throw error;
-    }
+        const trip = await getTripById(destination.tripId);
+        if (trip.userId !== req.user.id) {
+            const error = new Error('Forbidden: cannot create activity for destination you do not own');
+            error.status = 403;
+            throw error;
+        }
 
-    const newActivity = await createActivity(req.body);
-    res.status(201).json(newActivity);
+        const newActivity = await createActivity(req.body);
+        res.status(201).json(newActivity);
+    } catch (err) {
+        next(err);
+    }
 }
 
 export async function updateActivityHandler(req, res, next) {
