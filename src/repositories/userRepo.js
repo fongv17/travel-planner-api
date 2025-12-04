@@ -32,6 +32,7 @@ export async function findLoggedInUser(userId) {
         where: { id: userId },
         select: {
             id: true,
+            name: true,
             email: true,
             role: true,
         }
@@ -42,17 +43,24 @@ export async function updateLoggedInUser(userId, data) {
     return await prisma.user.update({
         where: { id: userId },
         data,
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+        }
     });
 }
 
 export async function deleteUser(userId) {
-    return await prisma.user.delete({
+    await prisma.user.delete({
         where: { id: userId },
     });
+    return userId;
 }
 
 export async function getAllUserTrips(userId) {
-    return await prisma.post.findMany({
+    return await prisma.trip.findMany({
         where: { userId },
     });
 }

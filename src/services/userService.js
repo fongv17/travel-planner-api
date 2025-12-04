@@ -15,8 +15,8 @@ export async function getLoggedInUser(userId) {
     return await findLoggedInUser(userId);
 }
 
-export async function changeLoggedInUser(targetUserId, newRole) {
-    return await updateLoggedInUser(targetUserId, newRole);
+export async function changeLoggedInUser(userId, data) {
+    return await updateLoggedInUser(userId, data);
 }
 
 export async function removeUser(userId) {
