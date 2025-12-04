@@ -36,8 +36,8 @@ export async function updateTripHandler(req, res, next) {
     let id = parseInt(req.params.id);
     const updates = {};
     if (req.body.name) updates.name = req.body.name;
-    if (req.body.startDate) updates.startDate = req.body.startDate;
-    if (req.body.endDate) updates.endDate = req.body.endDate;
+    if (req.body.startDate) updates.startDate = new Date(req.body.startDate).toISOString();
+    if (req.body.endDate) updates.endDate = new Date(req.body.endDate).toISOString();
     const updatedTrip = await updateTrip(id, updates);
     res.status(200).json(updatedTrip)
 }

@@ -135,8 +135,8 @@ export const validateUpdateDestination = [
     .toDate()
     .bail()
     .custom((value, { req }) => {
-      if (req.body.startDate && new Date(value) < new Date(req.body.startDate)) {
-        throw new Error('departureDate must be after or equal to startDate');
+      if (req.body.arrivalDate && new Date(value) < new Date(req.body.arrivalDate)) {
+        throw new Error('departureDate must be after or equal to arrivalDate');
       }
       return true;
     }),  
