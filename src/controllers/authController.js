@@ -6,11 +6,11 @@ const prisma = new PrismaClient();
 
 /**
  * POST /auth/signup
- * body: { name, email, password }
+ * body: { name, email, password, role? }
  */
 export const signup = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     if (!name || !email || !password) {
       return res
@@ -23,45 +23,27 @@ export const signup = async (req, res) => {
       return res.status(409).json({ message: "Email already in use" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Determine the role for the new user
+    let userRole = "USER"; // default role
 
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        role: "USER", // default role
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true,
-      },
-    });
+    if (role === "ADMIN") {
+      // Check if there are any existing admin users
+      const adminCount = await prisma.user.count({
+        where: { role: "ADMIN" }
+      });
 
-    const token = signToken(user);
-
-    return res.status(201).json({ user, token });
-  } catch (err) {
-    console.error("Signup error:", err);
-    return res.status(500).json({ message: "Server error" });
-  }
-};
-
-export const adminsignup = async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-
-    if (!name || !email || !password) {
-      return res
-        .status(400)
-        .json({ message: "name, email, and password are required" });
-    }
-
-    const existing = await prisma.user.findUnique({ where: { email } });
-    if (existing) {
-      return res.status(409).json({ message: "Email already in use" });
+      // Allow admin role if:
+      // 1. Request comes from an authenticated admin, OR
+      // 2. No admin users exist yet (first admin creation)
+      if (req.user && req.user.role === "ADMIN") {
+        userRole = "ADMIN";
+      } else if (adminCount === 0) {
+        userRole = "ADMIN"; // Allow first admin creation
+      } else {
+        return res.status(403).json({
+          message: "Admin role can only be assigned by existing admins"
+        });
+      }
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -71,7 +53,7 @@ export const adminsignup = async (req, res) => {
         name,
         email,
         password: hashedPassword,
-        role: "ADMIN", 
+        role: userRole,
       },
       select: {
         id: true,
