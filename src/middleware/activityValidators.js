@@ -37,6 +37,13 @@ export const validateActivityQuery = [
 ];
 
 export const validateCreateActivity = [
+  body('destinationId')
+    .exists({ values: 'falsy' })
+    .withMessage('destinationId is required')
+    .bail()
+    .isInt({ min: 1 })
+    .withMessage('destinationId must be a positive integer'),
+
   body('title')
     .exists({ values: 'falsy' })
     .withMessage('title is required')
@@ -48,16 +55,6 @@ export const validateCreateActivity = [
     .bail()
     .isLength({ min: 3 })
     .withMessage('title must be at least 3 characters'),
-
-  body('type')
-    .optional()
-    .trim()
-    .escape()
-    .isString()
-    .withMessage('type must be a string')
-    .bail()
-    .isLength({ min: 1 })
-    .withMessage('type must be at least 1 character'),
 
    body('startTime')
     .optional()
