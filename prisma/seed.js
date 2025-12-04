@@ -8,7 +8,7 @@ async function main() {
     data: {
       name: "Trevor Demo",
       email: "Trevor@demo.com",
-      password: "$2b$10$Nd.XzJ1L20del1Ph2iTtWOi3xd/JGZkq1Tu2/7wGWfUhK.LsIXZ6.", // hashed
+      password: "test", // hashed
       role: "USER",
     },
   });

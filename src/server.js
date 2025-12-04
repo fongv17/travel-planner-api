@@ -15,6 +15,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
 
+// URL normalization middleware to handle double slashes (e.g., //auth/login -> /auth/login)
+app.use((req, res, next) => {
+  req.url = req.url.replace(/\/+/g, '/');
+  next();
+});
+
 app.use(morgan('tiny'));
 
 const specs = YAML.load('./public/bundled.yaml')
