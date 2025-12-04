@@ -37,6 +37,13 @@ export const validateDestinationQuery = [
 ];
 
 export const validateCreateDestination = [
+  body('tripId')
+    .exists({ values: 'falsy' })
+    .withMessage('tripId is required')
+    .bail()
+    .isInt({ min: 1 })
+    .withMessage('tripId must be a positive integer'),
+
   body('city')
     .exists({ values: 'falsy' })
     .withMessage('city is required')

@@ -37,6 +37,13 @@ export const validateAccommodationQuery = [
 ];
 
 export const validateCreateAccommodation = [
+  body('destinationId')
+    .exists({ values: 'falsy' })
+    .withMessage('destinationId is required')
+    .bail()
+    .isInt({ min: 1 })
+    .withMessage('destinationId must be a positive integer'),
+
   body('name')
     .exists({ values: 'falsy' })
     .withMessage('name is required')
@@ -70,12 +77,13 @@ export const validateCreateAccommodation = [
 export const validateUpdateAccommodation = [
   oneOf(
     [
-      body('country').exists({ values: 'falsy' }),
-      body('city').exists({ values: 'falsy' }),
+      body('name').exists({ values: 'falsy' }),
+      body('type').exists({ values: 'falsy' }),
+      body('pricePerNight').exists(),
     ],
     {
       message:
-        'At least one field (country, city) must be provided',
+        'At least one field (name, type, pricePerNight) must be provided',
     },
   ),
 
@@ -89,15 +97,20 @@ export const validateUpdateAccommodation = [
     .isLength({ min: 3 })
     .withMessage('name must be at least 3 characters'),
 
-  body('city')
+  body('type')
     .optional()
     .trim()
     .escape()
     .isString()
-    .withMessage('city must be a string')
+    .withMessage('type must be a string')
     .bail()
-    .isLength({ min: 2 })
-    .withMessage('city must be at least 2 characters'),
+    .isLength({ min: 1 })
+    .withMessage('type must be at least 1 character'),
+
+  body('pricePerNight')
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('pricePerNight must be a positive number'),
 
   handleValidationErrors,
 ];
