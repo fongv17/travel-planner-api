@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "node --env-file=.env --watch src/server.js",
     "start": "node src/server.js",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "build-docs": "swagger-cli bundle docs/openapi.yaml --outfile public/bundled.yaml --type yaml"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

@@ -8,7 +8,103 @@ servers:
     description: Local development servers
   - url: https://travel-planner-api-1-476c.onrender.com/
     description: Production sever on render
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
 paths:
+  /auth/login:
+    post:
+      summary: User login
+      description: Authenticate user and return JWT token
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  format: password
+                  example: securepassword123
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              example:
+                user:
+                  id: 1
+                  name: "John Doe"
+                  email: "user@example.com"
+                  role: "USER"
+                token: "eyJhbGciOiJIUzI1NiIs..."
+        '401':
+          description: Invalid credentials
+  /auth/signup:
+    post:
+      summary: User registration
+      description: Register a new user account
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                  example: "John Doe"
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  format: password
+                  minLength: 8
+                  example: securepassword123
+                role:
+                  type: string
+                  enum: [USER, ADMIN]
+                  default: USER
+                  example: USER
+      responses:
+        '201':
+          description: Registration successful
+          content:
+            application/json:
+              example:
+                user:
+                  id: 2
+                  name: "John Doe"
+                  email: "user@example.com"
+                  role: "USER"
+                token: "eyJhbGciOiJIUzI1NiIs..."
+        '400':
+          description: Validation error
+        '409':
+          description: Email already in use
   /accommodations:
     $ref: paths/accommodations.yaml
   /accommodations/{id}:

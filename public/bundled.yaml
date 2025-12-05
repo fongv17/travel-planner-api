@@ -2,13 +2,111 @@ openapi: 3.0.3
 info:
   title: Travel Planner API
   version: 1.0.0
-  description: API for managing trips, accommodations, activities, destinations, and users.
+  description: 'API for managing trips, accommodations, activities, destinations, and users.'
 servers:
-  - url: http://localhost:3000
+  - url: 'http://localhost:3000'
     description: Local development servers
-  - url: https://travel-planner-api-1-476c.onrender.com/
+  - url: 'https://travel-planner-api-1-476c.onrender.com/'
     description: Production sever on render
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
 paths:
+  /auth/login:
+    post:
+      summary: User login
+      description: Authenticate user and return JWT token
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  format: password
+                  example: securepassword123
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              example:
+                user:
+                  id: 1
+                  name: John Doe
+                  email: user@example.com
+                  role: USER
+                token: eyJhbGciOiJIUzI1NiIs...
+        '401':
+          description: Invalid credentials
+  /auth/signup:
+    post:
+      summary: User registration
+      description: Register a new user account
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  format: password
+                  minLength: 8
+                  example: securepassword123
+                role:
+                  type: string
+                  enum:
+                    - USER
+                    - ADMIN
+                  default: USER
+                  example: USER
+      responses:
+        '201':
+          description: Registration successful
+          content:
+            application/json:
+              example:
+                user:
+                  id: 2
+                  name: John Doe
+                  email: user@example.com
+                  role: USER
+                token: eyJhbGciOiJIUzI1NiIs...
+        '400':
+          description: Validation error
+        '409':
+          description: Email already in use
   /accommodations:
     get:
       summary: Get all accommodations
@@ -29,7 +127,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccommodationCreate'
+              type: object
+              required:
+                - name
+                - type
+                - pricePerNight
+              properties:
+                name:
+                  type: string
+                  example: Seaside Hotel
+                type:
+                  type: string
+                  example: Hotel
+                pricePerNight:
+                  type: number
+                  example: 120.5
             example:
               name: Mountain Resort
               type: Resort
@@ -44,11 +156,11 @@ paths:
                 name: Mountain Resort
                 type: Resort
                 pricePerNight: 150
-  /accommodations/{id}:
+  '/accommodations/{id}':
     get:
       summary: Get accommodation by ID
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       responses:
         '200':
           description: Accommodation found
@@ -62,12 +174,22 @@ paths:
     put:
       summary: Update accommodation
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccommodationUpdate'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Mountain Resort
+                type:
+                  type: string
+                  example: Resort
+                pricePerNight:
+                  type: number
+                  example: 150
             example:
               pricePerNight: 140
       responses:
@@ -83,7 +205,7 @@ paths:
     delete:
       summary: Delete accommodation
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       responses:
         '204':
           description: Deleted successfully
@@ -108,7 +230,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ActivityCreate'
+              type: object
+              required:
+                - country
+                - city
+                - arrivalDate
+                - departureDate
+              properties:
+                country:
+                  type: string
+                  example: Italy
+                city:
+                  type: string
+                  example: Rome
+                arrivalDate:
+                  type: string
+                  format: date
+                  example: '2025-12-01'
+                departureDate:
+                  type: string
+                  format: date
+                  example: '2025-12-07'
             example:
               country: Italy
               city: Rome
@@ -125,11 +267,11 @@ paths:
                 city: Paris
                 arrivalDate: '2025-12-10'
                 departureDate: '2025-12-15'
-  /activities/{id}:
+  '/activities/{id}':
     get:
       summary: Get activity by ID
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       responses:
         '200':
           description: Activity found
@@ -144,12 +286,27 @@ paths:
     put:
       summary: Update activity
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ActivityUpdate'
+              type: object
+              properties:
+                country:
+                  type: string
+                  example: Italy
+                city:
+                  type: string
+                  example: Venice
+                arrivalDate:
+                  type: string
+                  format: date
+                  example: '2025-12-01'
+                departureDate:
+                  type: string
+                  format: date
+                  example: '2025-12-07'
             example:
               city: Venice
       responses:
@@ -166,7 +323,7 @@ paths:
     delete:
       summary: Delete activity
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       responses:
         '204':
           description: Deleted successfully
@@ -189,7 +346,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DestinationCreate'
+              type: object
+              required:
+                - country
+                - city
+              properties:
+                country:
+                  type: string
+                  example: Germany
+                city:
+                  type: string
+                  example: Berlin
             example:
               country: Germany
               city: Berlin
@@ -202,11 +369,11 @@ paths:
                 id: 2
                 country: Germany
                 city: Berlin
-  /destinations/{id}:
+  '/destinations/{id}':
     get:
       summary: Get destination by ID
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       responses:
         '200':
           description: Destination found
@@ -219,12 +386,19 @@ paths:
     put:
       summary: Update destination
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DestinationUpdate'
+              type: object
+              properties:
+                country:
+                  type: string
+                  example: France
+                city:
+                  type: string
+                  example: Lyon
             example:
               city: Lyon
       responses:
@@ -239,7 +413,7 @@ paths:
     delete:
       summary: Delete destination
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       responses:
         '204':
           description: Deleted successfully
@@ -263,7 +437,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TripCreate'
+              type: object
+              required:
+                - name
+                - startDate
+                - endDate
+              properties:
+                name:
+                  type: string
+                  example: Winter Asia Trip
+                startDate:
+                  type: string
+                  format: date
+                  example: '2025-12-01'
+                endDate:
+                  type: string
+                  format: date
+                  example: '2025-12-20'
             example:
               name: Winter Asia Trip
               startDate: '2025-12-01'
@@ -278,11 +468,15 @@ paths:
                 name: Winter Asia Trip
                 startDate: '2025-12-01'
                 endDate: '2025-12-20'
-  /trips/{id}:
+  '/trips/{id}':
     get:
       summary: Get trip by ID
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           description: Trip found
@@ -296,12 +490,24 @@ paths:
     put:
       summary: Update trip
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TripUpdate'
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Summer Europe Adventure
+                startDate:
+                  type: string
+                  format: date
+                  example: '2025-06-01'
+                endDate:
+                  type: string
+                  format: date
+                  example: '2025-06-15'
             example:
               name: Summer Europe Adventure
       responses:
@@ -317,7 +523,7 @@ paths:
     delete:
       summary: Delete trip
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       responses:
         '204':
           description: Deleted successfully
@@ -340,7 +546,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCreate'
+              type: object
+              required:
+                - email
+                - role
+              properties:
+                email:
+                  type: string
+                  example: alice@example.com
+                role:
+                  type: string
+                  example: user
             example:
               email: alice@example.com
               role: user
@@ -353,11 +569,11 @@ paths:
                 id: 2
                 email: alice@example.com
                 role: user
-  /users/{id}:
+  '/users/{id}':
     get:
       summary: Get user by ID
       parameters:
-        - $ref: '#/components/parameters/IdParam'
+        - $ref: '#/paths/~1trips~1%7Bid%7D/get/parameters/0'
       responses:
         '200':
           description: User found
@@ -367,144 +583,3 @@ paths:
                 id: 1
                 email: jake@example.com
                 role: user
-components:
-  schemas:
-    AccommodationCreate:
-      type: object
-      required:
-        - name
-        - type
-        - pricePerNight
-      properties:
-        name:
-          type: string
-          example: Seaside Hotel
-        type:
-          type: string
-          example: Hotel
-        pricePerNight:
-          type: number
-          example: 120.5
-    AccommodationUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Mountain Resort
-        type:
-          type: string
-          example: Resort
-        pricePerNight:
-          type: number
-          example: 150
-    ActivityCreate:
-      type: object
-      required:
-        - country
-        - city
-        - arrivalDate
-        - departureDate
-      properties:
-        country:
-          type: string
-          example: Italy
-        city:
-          type: string
-          example: Rome
-        arrivalDate:
-          type: string
-          format: date
-          example: '2025-12-01'
-        departureDate:
-          type: string
-          format: date
-          example: '2025-12-07'
-    ActivityUpdate:
-      type: object
-      properties:
-        country:
-          type: string
-          example: Italy
-        city:
-          type: string
-          example: Venice
-        arrivalDate:
-          type: string
-          format: date
-          example: '2025-12-01'
-        departureDate:
-          type: string
-          format: date
-          example: '2025-12-07'
-    DestinationCreate:
-      type: object
-      required:
-        - country
-        - city
-      properties:
-        country:
-          type: string
-          example: Germany
-        city:
-          type: string
-          example: Berlin
-    DestinationUpdate:
-      type: object
-      properties:
-        country:
-          type: string
-          example: France
-        city:
-          type: string
-          example: Lyon
-    TripCreate:
-      type: object
-      required:
-        - name
-        - startDate
-        - endDate
-      properties:
-        name:
-          type: string
-          example: Winter Asia Trip
-        startDate:
-          type: string
-          format: date
-          example: '2025-12-01'
-        endDate:
-          type: string
-          format: date
-          example: '2025-12-20'
-    TripUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Summer Europe Adventure
-        startDate:
-          type: string
-          format: date
-          example: '2025-06-01'
-        endDate:
-          type: string
-          format: date
-          example: '2025-06-15'
-    UserCreate:
-      type: object
-      required:
-        - email
-        - role
-      properties:
-        email:
-          type: string
-          example: alice@example.com
-        role:
-          type: string
-          example: user
-  parameters:
-    IdParam:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: integer

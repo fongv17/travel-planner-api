@@ -23,6 +23,9 @@ app.use((req, res, next) => {
 
 app.use(morgan('tiny'));
 
+// JSON parsing middleware - must come before Swagger UI
+app.use(express.json());
+
 const specs = YAML.load('./public/bundled.yaml')
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 app.get('/', (req, res) => {
@@ -31,8 +34,6 @@ app.get('/', (req, res) => {
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
-
-app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/trips', tripRoutes);
 app.use('/destinations', destinationRoutes);
