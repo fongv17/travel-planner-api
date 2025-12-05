@@ -28,7 +28,8 @@ export async function getById(id) {
     where: { id },
     select: {
       id: true,
-      name: true,      
+      destinationId: true,
+      name: true,
       type: true,
       pricePerNight: true,
     },
